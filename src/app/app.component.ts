@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'new-pj';
+  public count : number = 0;
+  public name: string = '';
+
+  constructor() {
+    this.count = 8;
+  }
+
+  public IncrementCount () : void {
+    this.count++;
+  }
 }
