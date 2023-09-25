@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,8 @@ import { HeaderComponent } from './shared/components/Layout/header/header.compon
 import { MenuComponent } from './shared/components/Layout/menu/menu.component';
 import { SlidebarComponent } from './shared/components/Layout/slidebar/slidebar.component';
 import { SliderComponent } from './shared/components/Layout/slider/slider.component';
+import { TransferCurrencyMoneyPipe } from './pipes/transfer-currency-money.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,15 @@ import { SliderComponent } from './shared/components/Layout/slider/slider.compon
     HeaderComponent,
     MenuComponent,
     SlidebarComponent,
-    SliderComponent
+    SliderComponent,
+    TransferCurrencyMoneyPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

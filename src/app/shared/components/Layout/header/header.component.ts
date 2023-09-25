@@ -4,15 +4,17 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  
 })
+
 export class HeaderComponent {
-  public keyword : string = '';
+  keyword : string = '';
 
   constructor(private router : Router) {}
 
-  onChangeValue(e : any) {
-    this.keyword = e.target.value;
+  onChangeValue() {
+    console.log(this.keyword); 
   }
 
   onClickEvent() {

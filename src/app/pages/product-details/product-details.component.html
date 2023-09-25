@@ -5,14 +5,14 @@
             <img src="assets/images/product-1.png">
         </div>
         <div id="product-details" class="col-lg-6 col-md-6 col-sm-12">
-            <h1>iPhone X - 64GB Silver</h1>
+            <h1>iPhone X - 64GB Silver {{product.name}}</h1>
             <ul>
                 <li><span>Bảo hành:</span> 12 Tháng</li>
-                <li><span>Đi kèm:</span> Hộp, sách, sạc, cáp, tai nghe</li>
-                <li><span>Tình trạng:</span> Máy Mới 100%</li>
-                <li><span>Khuyến Mại:</span> Dán Màn Hình 3 lớp</li>
+                <li><span>Đi kèm:</span> Hộp, sách, sạc, cáp, tai nghe {{product.accessories}} </li>
+                <li><span>Tình trạng:</span> Máy Mới 100% {{product.status}} </li>
+                <li><span>Khuyến Mại:</span> Dán Màn Hình 3 lớp {{product.promotion}} </li>
                 <li id="price">Giá Bán (chưa bao gồm VAT)</li>
-                <li id="price-number">22.990.000đ</li>
+                <li id="price-number">22.990.000đ  {{product.price | transferCurrencyMoney}} </li>
                 <li id="status">Còn hàng</li>
             </ul>
             <div id="add-cart"><a href="#">Mua ngay</a></div>
@@ -49,17 +49,17 @@
             <form method="post">
                 <div class="form-group">
                     <label>Tên:</label>
-                    <input name="comm_name" required type="text" class="form-control">
+                    <input [(ngModel)]="data['name']" [ngModelOptions]="{ standalone: true }" name="name" required type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input name="comm_mail" required type="email" class="form-control" id="pwd">
+                    <input [(ngModel)]="data['email']" [ngModelOptions]="{ standalone: true }" name="email" required type="email" class="form-control" id="pwd">
                 </div>
                 <div class="form-group">
                     <label>Nội dung:</label>
-                    <textarea name="comm_details" required rows="8" class="form-control"></textarea>     
+                    <textarea [(ngModel)]="data['content']" [ngModelOptions]="{ standalone: true }" name="contents" required rows="8" class="form-control"></textarea>     
                 </div>
-                <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
+                <button (click)="submitComment($event)" type="submit" name="sbm" class="btn btn-primary">Gửi</button>
             </form> 
         </div>
     </div>

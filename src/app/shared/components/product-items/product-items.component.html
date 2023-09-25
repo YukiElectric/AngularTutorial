@@ -1,1 +1,5 @@
-<p>product-items works!</p>
+<div class="product-item card text-center">
+    <a routerLink="/ProductDetails/{{item.id}}"><img src="{{imgName}}"></a>
+    <h4><a routerLink="/ProductDetails">{{item.name}}</a></h4>
+    <p>Giá Bán: <span>{{item.price | transferCurrencyMoney}}</span></p>
+</div>
