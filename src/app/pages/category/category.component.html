@@ -1,10 +1,10 @@
 <!--	List Product	-->
 <div class="products">
-    <h3>{{productItem.name}}  iPhone (hiện có {{productItem.length}} 186 sản phẩm)</h3>
+    <h3>{{product.name}} (hiện có {{countItem}} sản phẩm)</h3>
     <div class="product-list card-deck">
 
         <!-- NO HAVE API -->
-        <div class="product-item card text-center">
+        <!-- <div class="product-item card text-center">
             <a routerLink="/ProductDetails"><img src="assets/images/product-1.png"></a>
             <h4><a routerLink="/ProductDetails">iPhone Xs Max 2 Sim - 256GB</a></h4>
             <p>Giá Bán: <span>32.990.000đ</span></p>
@@ -52,13 +52,15 @@
             <a routerLink="/ProductDetails"><img src="assets/images/product-9.png"></a>
             <h4><a routerLink="/ProductDetails">iPhone Xs Max 2 Sim - 256GB</a></h4>
             <p>Giá Bán: <span>32.990.000đ</span></p>
-        </div>
+        </div> -->
         <!-- END NO HAVE API -->
 
 
         <!-- HAVE API -->
-        <div *ngFor="let item of product">
-            <app-product-items  [item]="item"></app-product-items>
+        <div class="product-item card text-center" *ngFor="let item of productItem">
+            <div>
+                <app-product-items  [item]="item"></app-product-items>
+            </div>
         </div>
         <!-- END HAVE API -->
         

@@ -12,9 +12,7 @@ export class ProductDetailsComponent implements OnInit {
   id: any;
   imgUrl : string = '';
 
-  commentData: any;
   comment: any;
-  productData: any;
   product: any;
 
   data: {[key : string] : string} = {
@@ -23,19 +21,20 @@ export class ProductDetailsComponent implements OnInit {
     content: '',
   }
 
-  dataStatus: any;
-
   getComment() {
-    this.commentData = this.httpService.getCommentProduct(this.id, {});
+    this.httpService.getCommentProduct(this.id, {}).subscribe(data => {
+      this.comment = data.data.docs
+    });
   }
 
   submitComment(e: any) {
     e.preventDefault();
-    this.dataStatus = this.httpService.createCommentProduct(this.id, this.data, {});
-    if (this.dataStatus.status == 'success') {
-      this.getComment();
-      for (let key in this.data) this.data[key] = '';
-    }
+    this.httpService.createCommentProduct(this.id, this.data, {}).subscribe(data =>{
+      if (data.status == 'success') {
+        this.getComment();
+        for (let key in this.data) this.data[key] = '';
+      }
+    });
   }
 
   constructor(
@@ -46,11 +45,15 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      console.log(this.id);
+      
     })
-    this.getComment();
-    this.productData = this.httpService.getProduct(this.id, {});
+    
+    this.httpService.getProduct(this.id, {}).subscribe(data => {
+      this.product = data.data;
+      this.imgUrl = getImageProduct(this.product.image);
+    });
 
-    this.imgUrl = getImageProduct(this.id);
-    this.product = this.productData.data.docs;
+    this.getComment();
   }
 }

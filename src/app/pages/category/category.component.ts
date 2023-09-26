@@ -9,27 +9,34 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class CategoryComponent implements OnInit {
   id : any;
-  productData : any;
-  productItemData : any;
 
   product : any;
   productItem : any;
+
+  countItem : number = 0;
 
   constructor(
     private route : ActivatedRoute,
     private httpService : HttpService
   ) { }
 
+  private updateData(): void {
+    this.countItem = 0;
+    this.httpService.getProductCategory(this.id, {}).subscribe(data => {   
+      this.productItem = data.data.docs;
+      for (let i of this.productItem) if(i!=undefined) this.countItem++;
+    });
+
+    this.httpService.getCategory(this.id, {}).subscribe(data => {
+      this.product = data.data;
+    });
+  }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      this.updateData();
     })
-
-    this.productData = this.httpService.getProductCategory(this.id, {});
-    this.productItemData = this.httpService.getCategory(this.id, {});
-
-    this.product = this.productData.data.docs;
-    this.productItem = this.productData.data;
   }
 
 

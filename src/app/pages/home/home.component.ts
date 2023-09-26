@@ -7,27 +7,27 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private featuredData: any;
-  private latestData: any;
 
-  featuredProduct: any;
-  latestProduct: any;
+  featuredData: any;
+  latestData: any;
 
   constructor(private httpService: HttpService) { }
 
   ngOnInit(): void {
-    this.featuredData = this.httpService.getProducts({
+
+    this.httpService.getProducts({
       limit: 6,
       "filter[is_featured]": true,
+    }).subscribe(data => {
+      this.featuredData = data.data.docs;
     });
 
-    this.latestData = this.httpService.getProducts({
-      limit : 6,
-    })
+    this.httpService.getProducts({
+      limit: 6,
+    }).subscribe(data => {
+      this.latestData = data.data.docs;
+    });
 
-    this.featuredProduct = this.featuredData.data.docs;
-
-    this.latestProduct = this.latestProduct.data.docs;
   }
 
 }

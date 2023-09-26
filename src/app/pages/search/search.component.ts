@@ -9,7 +9,6 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class SearchComponent implements OnInit {
   keyword : string = '';
-  productsData : any;
   products : any;
 
   constructor(
@@ -20,14 +19,14 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.keyword = params['name'];
-      console.log(this.keyword);
     })
 
-    this.productsData = this.httpService.getProducts({
+    this.httpService.getProducts({
       name : this.keyword
+    }).subscribe(data => {
+      this.products = data.data.docs;
     })
 
-    this.products = this.productsData.data.docs;
   }
 
 }

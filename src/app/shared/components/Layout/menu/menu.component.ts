@@ -7,15 +7,14 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  categoriesData : any;
   categories : any;
 
   constructor (private httpService : HttpService) {}
 
   ngOnInit(): void {
-    this.categoriesData = this.httpService.getCategories({});
+    this.httpService.getCategories({}).subscribe(data => {
+      this.categories = data.data.docs;   
+    });
   }
-
-
 
 }

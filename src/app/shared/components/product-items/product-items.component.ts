@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { getImageProduct } from '../../ultils';
 
 @Component({
@@ -6,12 +6,16 @@ import { getImageProduct } from '../../ultils';
   templateUrl: './product-items.component.html',
   styleUrls: ['./product-items.component.css']
 })
-export class ProductItemsComponent {
+export class ProductItemsComponent implements OnInit{
   @Input() item : any;
 
   imgName : any;
 
   constructor () {
-    this.imgName = getImageProduct(this.item.id);
+    
   }
+  ngOnInit(): void {
+    this.imgName = getImageProduct(this.item.image);
+  }
+
 }

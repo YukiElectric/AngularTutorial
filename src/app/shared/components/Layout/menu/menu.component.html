@@ -1,20 +1,18 @@
-<nav>
-    <div id="menu" class="collapse navbar-collapse">
-        <ul *ngFor="let item of categories">
+<ul>
 
-            <!-- NO HAVE API -->
-            <li class="menu-item"><a routerLink="Category">iPhone</a></li>
-            <li class="menu-item"><a routerLink="Category">Samsung</a></li>
-            <li class="menu-item"><a routerLink="Category">HTC</a></li>
-            <li class="menu-item"><a routerLink="Category">Nokia</a></li>
-            <li class="menu-item"><a routerLink="Category">Sony</a></li>
-            <li class="menu-item"><a routerLink="Category">Blackberry</a></li>
-            <!-- END NO HAVE API -->
+    <!-- NO HAVE API -->
+    <!-- <li class="menu-item"><a routerLink="Category">iPhone</a></li>
+    <li class="menu-item"><a routerLink="Category">Samsung</a></li>
+    <li class="menu-item"><a routerLink="Category">HTC</a></li>
+    <li class="menu-item"><a routerLink="Category">Nokia</a></li>
+    <li class="menu-item"><a routerLink="Category">Sony</a></li>
+    <li class="menu-item"><a routerLink="Category">Blackberry</a></li> -->
+    <!-- END NO HAVE API -->
 
 
-            <!-- HAVE API -->
-            <li class="menu-item"><a routerLink="/Category/{{item._id}}">{{item.name}}</a></li>
-            <!-- END HAVE API -->
-        </ul>
-    </div>
-</nav>
+    <!-- HAVE API -->
+    <li class="menu-item" *ngFor="let item of categories">
+        <a routerLink="/Category/{{item._id}}">{{item.name}}</a>
+    </li>
+    <!-- END HAVE API -->
+</ul>
