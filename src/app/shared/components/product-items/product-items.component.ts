@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { getImageProduct } from '../../ultils';
 
 @Component({

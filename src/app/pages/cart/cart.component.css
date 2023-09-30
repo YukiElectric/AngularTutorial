@@ -1,0 +1,4 @@
+input #name-input::-webkit-input-placeholder {
+    color: #ff0000;
+    font-style: normal;
+}

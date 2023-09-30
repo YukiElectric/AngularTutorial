@@ -6,65 +6,24 @@
         <div class="cart-nav-item col-lg-3 col-md-3 col-sm-12">Giá</div>    
     </div>  
     <form method="post">
-    <div class="cart-item row">
+    <div class="cart-item row" *ngFor="let item of data">
         <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <img src="assets/images/product-1.png">
-            <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-        </div> 
+            <img src="{{getImage(item.image)}}">
+            <h4>{{item.name}}</h4>
+        </div>
         
         <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-            <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1">
-        </div> 
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>    
-    </div>  
-    <div class="cart-item row">
-        <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <img src="assets/images/product-2.png">
-            <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-        </div> 
-        <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-            <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1">
-        </div> 
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>    
-    </div> 
-    <div class="cart-item row">
-        <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <img src="assets/images/product-3.png">
-            <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-        </div> 
-        <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-            <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1">
-        </div> 
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>    
-    </div>
-    <div class="cart-item row">
-        <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <img src="assets/images/product-4.png">
-            <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-        </div> 
-        <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-            <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1">
-        </div> 
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>    
-    </div>
-    <div class="cart-item row">
-        <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <img src="assets/images/product-5.png">
-            <h4>iPhone Xs Max 2 Sim - 256GB Gold</h4>
-        </div> 
-        <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-            <input type="number" id="quantity" class="form-control form-blue quantity" value="1" min="1">
-        </div> 
-        
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>32.990.000đ</b><a href="#">Xóa</a></div>    
+            <input type="number" id="quantity" class="form-control form-blue quantity" [(ngModel)]="item.count" [ngModelOptions]="{ standalone : true }" min="1">
+        </div>
+        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{{ item.price*item.count | transferCurrencyMoney }}</b><a (click)="deleteCart(item)" routerLink="{{currentPath}}">Xóa</a></div>
     </div>
     
     <div class="row">
         <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-            <button id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập nhật giỏ hàng</button>	
+            <button (click)="updateCart()" id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập nhật giỏ hàng</button>	
         </div> 
         <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div> 
-        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>88.970.000đ</b></div>
+        <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{{sumPrice | transferCurrencyMoney}}</b></div>
     </div>
     </form>
                
@@ -77,7 +36,7 @@
     <div class="row">
 
         <div id="customer-name" class="col-lg-4 col-md-4 col-sm-12">
-            <input placeholder="Họ và tên (bắt buộc)" type="text" name="name" class="form-control" required>
+            <input class="name-input" placeholder="Họ và tên (bắt buộc)" type="text" name="name" class="form-control" required>
         </div>
         <div id="customer-phone" class="col-lg-4 col-md-4 col-sm-12">
             <input placeholder="Số điện thoại (bắt buộc)" type="text" name="phone" class="form-control" required>
@@ -93,16 +52,18 @@
     </form>
     <div class="row">
         <div class="by-now col-lg-6 col-md-6 col-sm-12">
-            <a routerLink="/Success">
+            <a (click)="paymentProduct()" routerLink="/Success">
                 <b>Mua ngay</b>
                 <span>Giao hàng tận nơi siêu tốc</span>
             </a>
         </div>
         <div class="by-now col-lg-6 col-md-6 col-sm-12">
-            <a href="#">
-                <b>Trả góp Online</b>
-                <span>Vui lòng call (+84) 0123456789</span>
-            </a>
+            <mat-dialog-actions>
+                <a (click)="openConfirm($event)" href="#">
+                    <b>Trả góp Online</b>
+                    <span>Vui lòng call (+84) 0123456789</span>
+                </a>
+            </mat-dialog-actions>
         </div>
     </div>
 </div>

@@ -1,0 +1,19 @@
+<ul class="pagination">
+    <li class="page-item" *ngIf="pages.hasPrev">
+        <a class="page-link" routerLink="/{{urlPath}}" [queryParams]="{name : name, page : pages.currentPage - 1}">Trang
+            trước</a>
+    </li>
+    <div style="display: contents;" *ngFor="let value of renderPagesHtml()">
+        <li [ngClass]="pages.currentPage==value ? 'page-item active' : 'page-item'">
+            <a *ngIf="value!='...'; else elseSpan" class="page-link" routerLink="/{{urlPath}}"
+                [queryParams]="{name : name, page : value}">{{value}}</a>
+            <ng-template #elseSpan>
+                <span class="page-link">{{value}}</span>
+            </ng-template>
+        </li>
+    </div>
+    <li class="page-item" *ngIf="pages.hasNext">
+        <a class="page-link" routerLink="/{{urlPath}}" [queryParams]="{name : name, page : pages.currentPage - 1}">Trang
+            sau</a>
+    </li>
+</ul>

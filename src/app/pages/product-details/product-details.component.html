@@ -19,7 +19,10 @@
                     <ng-template #outOfStock>Hết hàng</ng-template>
                 </li>
             </ul>
-            <div id="add-cart"><a href="#">Mua ngay</a></div>
+            <div id="add-cart"><a routerLink="{{currentPath}}" (click)="updateCart()">Mua ngay</a></div>
+            <!-- <app-custom-alert>
+                <div class="custom-alert" *ngIf="showAlert">{{showConfirm()}}</div>
+            </app-custom-alert> -->
         </div>
     </div>
     <div id="product-body" class="row">
@@ -36,20 +39,20 @@
     <div id="comment" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Bình luận sản phẩm</h3>
-            <form method="post">
-                <div class="form-group">
+            <form method="post" [formGroup]="myForm" (submit)="submitComment($event)">
+                <div class="form-group" >
                     <label>Tên:</label>
-                    <input [(ngModel)]="data['name']" [ngModelOptions]="{ standalone: true }" name="name" required type="text" class="form-control">
+                    <input [(ngModel)]="data['name']" formControlName="name" required type="text" class="form-control" placeholder="Tên ( bắt buộc )" />
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input [(ngModel)]="data['email']" [ngModelOptions]="{ standalone: true }" name="email" required type="email" class="form-control" id="pwd">
+                    <input [(ngModel)]="data['email']"  formControlName="email" required type="email" class="form-control" id="pwd" />
                 </div>
                 <div class="form-group">
                     <label>Nội dung:</label>
-                    <textarea [(ngModel)]="data['content']" [ngModelOptions]="{ standalone: true }" name="contents" required rows="8" class="form-control"></textarea>     
+                    <textarea [(ngModel)]="data['content']"  formControlName="contents" required rows="8" class="form-control"></textarea>     
                 </div>
-                <button (click)="submitComment($event)" type="submit" name="sbm" class="btn btn-primary">Gửi</button>
+                <button type="submit" name="sbm" class="btn btn-primary">Gửi</button>
             </form> 
         </div>
     </div>

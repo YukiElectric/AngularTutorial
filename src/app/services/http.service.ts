@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { BASE_API } from '../shared/constants/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+  countCart : BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(
     private Http: HttpClient,
@@ -47,4 +48,15 @@ export class HttpService {
   createCommentProduct(id: any, data: any, config: any): Observable<any> {
     return this.Http.post(BASE_API + '/products/' + id + '/comments', data, { params: config ? this.converConfigToParams(config) : undefined });
   }
+
+  updateCountCart() : void {
+    const dataFromLocalStorage = localStorage.getItem('data');
+    var tempCount = 0;
+    if(dataFromLocalStorage) {
+      var parsedData = JSON.parse(dataFromLocalStorage);
+      for(let data of parsedData) if (data!=undefined) tempCount+=data.count;
+    }
+    this.countCart.next(tempCount);
+  }
+
 }

@@ -19,6 +19,13 @@ import { SlidebarComponent } from './shared/components/Layout/slidebar/slidebar.
 import { SliderComponent } from './shared/components/Layout/slider/slider.component';
 import { TransferCurrencyMoneyPipe } from './pipes/transfer-currency-money.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CustomAlertComponent } from './shared/components/custom-alert/custom-alert.component';
+import { SaleComponent } from './pages/sale/sale.component';
+import { InfomationComponent } from './pages/infomation/infomation.component';
+import { WarrantyComponent } from './pages/warranty/warranty.component';
 
 @NgModule({
   declarations: [
@@ -36,14 +43,21 @@ import { HttpClientModule } from '@angular/common/http';
     MenuComponent,
     SlidebarComponent,
     SliderComponent,
-    TransferCurrencyMoneyPipe
+    TransferCurrencyMoneyPipe,
+    PaginationComponent,
+    CustomAlertComponent,
+    SaleComponent,
+    InfomationComponent,
+    WarrantyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
