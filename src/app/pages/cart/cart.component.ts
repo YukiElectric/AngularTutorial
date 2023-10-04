@@ -3,6 +3,8 @@ import { HttpService } from 'src/app/services/http.service';
 import { getImageProduct } from 'src/app/shared/ultils';
 import { Location } from '@angular/common';
 import { DialogService } from 'src/app/services/dialog.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -14,16 +16,46 @@ export class CartComponent implements OnInit {
   data: any;
   sumPrice: number = 0;
   currentPath = this.location.path();
-  status = false;
+
+  customerInfor: { [key: string]: string } = {
+    name: '',
+    phone: '',
+    mail: '',
+    add: '',
+  }
+
+  countCart: number = 0;
+
+  myForm: FormGroup;
+
+  erorStatus: boolean = true;
 
   constructor(private httpService: HttpService,
     private location: Location,
-    private dialogService : DialogService
-  ) { }
+    private dialogService: DialogService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {
+    this.myForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      mail: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      add: ['', Validators.required]
+    });
+  }
 
   paymentProduct() {
-    localStorage.removeItem('data');
-    this.httpService.updateCountCart();
+    if (this.myForm.valid) {
+      if (this.countCart != 0) {
+        localStorage.removeItem('data');
+        this.httpService.updateCountCart();
+        this.router.navigate(['/Success'], {});
+      } else this.dialogService.openConfirmDialog("noInfor");
+    } else this.erorStatus = false;
+  }
+
+  changeValueForm() {
+    this.erorStatus = true;
   }
 
   getImage(id: any) {
@@ -55,15 +87,17 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.httpService.countCart.subscribe(data => {
+      this.countCart = data;
+    })
     this.sumPrice = 0;
     this.getDataFormLocalStorage();
     for (let item of this.data) this.sumPrice += item.count * item.price;
   }
 
-  openConfirm (e : Event) {
+  openConfirm(e: Event) {
     e.preventDefault();
-    this.status = true;
-    this.dialogService.openConfirmDialog();
+    this.dialogService.openConfirmDialog("contact");
   }
 
 }

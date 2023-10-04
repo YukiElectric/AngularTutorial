@@ -1,8 +1,18 @@
 <div class="confirm-dialog">
     <div class="dialog-content">
         <h2>Xác Nhận</h2>
-        <p>Vui lòng liên hệ qua số điện thoại dưới đây:</p>
-        <p><strong>(+84) 0123456789</strong></p>
+        <div style="display: contents;" [ngSwitch]="data">
+            <div style="display: contents;" *ngSwitchCase="'contact'">
+                <p>Vui lòng liên hệ qua số điện thoại dưới đây:</p>
+                <p><strong>(+84) 0123456789</strong></p>
+            </div>
+            <div style="display: contents;" *ngSwitchCase="'isStock'">
+                <p>Sản phẩm hiện tại đang hết hàng</p>
+            </div>
+            <div style="display: contents;" *ngSwitchCase="'noInfor'">
+                <p>Giỏ hàng hiện tại đang trống không thể tiến hành đặt hàng</p>
+            </div>
+        </div>
         <button matDialogClose>Đóng</button>
     </div>
 </div>

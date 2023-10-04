@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
@@ -9,29 +8,34 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class SearchComponent implements OnInit {
   keyword : string = '';
+  page : number = 0;
   products : any;
   pages = {
     limit : 12,
   }
 
   constructor(
-      private route: ActivatedRoute,
       private httpService : HttpService
     ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.keyword = params['name'];
+    this.httpService.getParmas();
+
+    this.httpService.keyword.subscribe(data => {
+      data!=undefined ? this.keyword = data : this.keyword = '';
     })
 
-    this.httpService.getProducts({
-      name : this.keyword,
-      limit : 12
-    }).subscribe(data => {
-      this.products = data.data.docs;
-      this.pages = {...this.pages, ...data.data.pages};
+    this.httpService.page.subscribe(data => {
+      data!=undefined ? this.page = data : this.page = 0;
+      this.httpService.getProducts({
+        name : this.keyword,
+        limit : 12,
+        page : this.page
+      }).subscribe(data => {
+        this.products = data.data.docs;
+        this.pages = {...this.pages, ...data.data.pages};
+      })
     })
-
   }
 
 }

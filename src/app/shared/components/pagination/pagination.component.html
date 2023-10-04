@@ -13,7 +13,7 @@
         </li>
     </div>
     <li class="page-item" *ngIf="pages.hasNext">
-        <a class="page-link" routerLink="/{{urlPath}}" [queryParams]="{name : name, page : pages.currentPage - 1}">Trang
+        <a class="page-link" routerLink="/{{urlPath}}" [queryParams]="{name : name, page : pages.currentPage + 1}">Trang
             sau</a>
     </li>
 </ul>

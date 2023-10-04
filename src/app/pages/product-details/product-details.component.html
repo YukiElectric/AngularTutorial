@@ -19,10 +19,15 @@
                     <ng-template #outOfStock>Hết hàng</ng-template>
                 </li>
             </ul>
-            <div id="add-cart"><a routerLink="{{currentPath}}" (click)="updateCart()">Mua ngay</a></div>
-            <!-- <app-custom-alert>
-                <div class="custom-alert" *ngIf="showAlert">{{showConfirm()}}</div>
-            </app-custom-alert> -->
+            <div id="add-cart">
+                <button (click)="updateCart('buy-now')" class="btn btn-warning mr-2">
+                    Mua ngay
+                </button>
+
+                <button (click)="updateCart('')" class="btn btn-info">
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
         </div>
     </div>
     <div id="product-body" class="row">
@@ -79,11 +84,5 @@
 <!--	End Product	--> 
 
 <div id="pagination">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Trang trước</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Trang sau</a></li>
-    </ul> 
+    <app-pagination [pages]="pages"></app-pagination>
 </div>

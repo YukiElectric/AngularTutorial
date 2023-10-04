@@ -2,15 +2,19 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { BASE_API } from '../shared/constants/app';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
   countCart : BehaviorSubject<number> = new BehaviorSubject(0);
+  page : BehaviorSubject<number> = new BehaviorSubject(0);
+  keyword : BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(
     private Http: HttpClient,
+    private route: ActivatedRoute
   ) { }
 
   private converConfigToParams(config: any): HttpParams {
@@ -59,4 +63,10 @@ export class HttpService {
     this.countCart.next(tempCount);
   }
 
+  getParmas() : void {
+    this.route.queryParams.subscribe(params => {
+      this.keyword.next(params['name']);
+      this.page.next(params['page']); 
+    })
+  }
 }

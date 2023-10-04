@@ -37,7 +37,7 @@
 	padding:10px;}
 
 
-.by-now a{
+.by-now button{
 	text-align:center;
 	display:inline-table;
 	padding:10px 30px;
@@ -51,21 +51,21 @@
 	color:#FFF;}	
 .by-now b{
 	display:block;}		
-.by-now:last-child a{
+.by-now:last-child button{
 	background:#305eb3;
 	border:1px solid #305eb3;}	
-.by-now a:hover{
+.by-now button:hover{
 	background:#FFF;}		
-.by-now a:hover b{
+.by-now button:hover b{
 	color:#EB1F27;
 	}	
-.by-now a:hover span{
+.by-now button:hover span{
 	color:#EB1F27;
 	}
-.by-now:last-child a:hover b{
+.by-now:last-child button:hover b{
 	color:#305eb3;
 	}	
-.by-now:last-child a:hover span{
+.by-now:last-child button:hover span{
 	color:#305eb3;
 	}		
 .by-now:first-child{

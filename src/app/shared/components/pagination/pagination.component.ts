@@ -11,23 +11,23 @@ export class PaginationComponent implements OnInit{
   name : string = '';
   urlPath : string = '';
   
-  constructor (private route : ActivatedRoute) {}
+  constructor (
+    private route : ActivatedRoute,
+    ) {}
 
   renderPagesHtml () {
     let pagesHtml = [];
     let totalPages = Math.ceil(this.pages.total / this.pages.limit);
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= totalPages; i++) {
       if(
         i === 1 ||
         i === this.pages.currentPage ||
-        i === 10 ||
-        // (i >= this.pages.prev && i<= this.pages.next) 
-        i <= 3
+        i === totalPages ||
+        i == this.pages.prev || i== this.pages.next
       ) pagesHtml.push(i);
       else if (
-        // i === this.pages.next + 1 ||
-        // i === this.pages.prev -1 
-        i === 4
+        i === this.pages.next + 1 ||
+        i === this.pages.prev -1 
       ) pagesHtml.push('...');
     }
     return pagesHtml;

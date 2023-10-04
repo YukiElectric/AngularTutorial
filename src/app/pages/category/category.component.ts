@@ -15,17 +15,32 @@ export class CategoryComponent implements OnInit {
 
   countItem : number = 0;
 
+  page : number = 0;
+
+  pages = {
+    limit : 12,
+  }
+
   constructor(
     private route : ActivatedRoute,
     private httpService : HttpService
   ) { }
 
   private updateData(): void {
-    this.countItem = 0;
-    this.httpService.getProductCategory(this.id, {}).subscribe(data => {   
-      this.productItem = data.data.docs;
-      for (let i of this.productItem) if(i!=undefined) this.countItem++;
-    });
+    this.httpService.getParmas();
+
+    this.httpService.page.subscribe(data=>{
+      this.page = data;
+      this.httpService.getProductCategory(this.id, {
+        limit : 12,
+        page : this.page
+      }).subscribe(data => {   
+        this.productItem = data.data.docs;
+        this.pages = {...this.pages, ...data.data.pages}
+        this.countItem = 0;
+        for (let i of this.productItem) if(i!=undefined) this.countItem++;
+      });
+    })
 
     this.httpService.getCategory(this.id, {}).subscribe(data => {
       this.product = data.data;

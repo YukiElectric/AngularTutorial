@@ -9,7 +9,7 @@ export class DialogService {
 
   constructor(private dialog : MatDialog) { }
 
-  openConfirmDialog () {
-    this.dialog.open(CustomAlertComponent, {});
+  openConfirmDialog (data : any) {
+    this.dialog.open(CustomAlertComponent, {data});
   }
 }

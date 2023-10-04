@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
 import { getImageProduct } from 'src/app/shared/ultils';
 import { Location } from '@angular/common';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-product-details',
@@ -24,27 +25,39 @@ export class ProductDetailsComponent implements OnInit {
     content: '',
   }
 
-  showAlert: boolean = false;
-
   currentPath = this.location.path();
 
   myForm: FormGroup;
 
   localStorageData = [{
-    id : '',
+    id: '',
     name: '',
     image: '',
     price: 0,
-    count : 1
+    count: 1
   },
-  ]
+  ];
+
+  pages = {
+    limit : 10,
+  }
+
+  page : number = 0;
 
 
 
   getComment() {
-    this.httpService.getCommentProduct(this.id, {}).subscribe(data => {
-      this.comment = data.data.docs
-    });
+    this.httpService.getParmas();
+
+    this.httpService.page.subscribe(data => {
+      this.page = data;
+      this.httpService.getCommentProduct(this.id, {
+        page : this.page,
+      }).subscribe(data => {
+        this.comment = data.data.docs
+        this.pages = {...this.pages, ...data.data.pages}
+      });
+    })
   }
 
   submitComment(e: any) {
@@ -61,46 +74,47 @@ export class ProductDetailsComponent implements OnInit {
   }
 
 
-  updateCart() {
-    this.showAlert = true;
-    
-    this.localStorageData = [{
-      id: this.product._id,
-      name: this.product.name,
-      image: this.product.image,
-      price: Math.ceil(this.product.price/1000)*1000,
-      count : 1
-    },
-    ]
+  updateCart(type : string) {
+    if (!this.product.is_stock) {
+      this.dialogService.openConfirmDialog("isStock");
+    } else {
+      this.localStorageData = [{
+        id: this.product._id,
+        name: this.product.name,
+        image: this.product.image,
+        price: Math.ceil(this.product.price / 1000) * 1000,
+        count: 1
+      },
+      ]
 
-    var dataFromLocalStorage = localStorage.getItem('data');
-    if(dataFromLocalStorage) {
-      var parsedData :any = JSON.parse(dataFromLocalStorage);
-      
-      for(let data of parsedData) {
-        var result = this.localStorageData.find((item) => item.id === data.id);
-        if(result) result.count+=data.count;
-        else this.localStorageData.push(data);
+      var dataFromLocalStorage = localStorage.getItem('data');
+      if (dataFromLocalStorage) {
+        var parsedData: any = JSON.parse(dataFromLocalStorage);
+
+        for (let data of parsedData) {
+          var result = this.localStorageData.find((item) => item.id === data.id);
+          if (result) result.count += data.count;
+          else this.localStorageData.push(data);
+        }
       }
-      // for(let data of parsedData) this.localStorageData.push(data);
+
+      const stringJson = JSON.stringify(this.localStorageData);
+      localStorage.removeItem('data');
+      localStorage.setItem('data', stringJson);
+
+      this.httpService.updateCountCart();
+
+      if(type=="buy-now") this.router.navigate(['/Cart'], {})
     }
-
-    const stringJson = JSON.stringify(this.localStorageData);
-    localStorage.removeItem('data');
-    localStorage.setItem('data', stringJson);
-    
-    this.httpService.updateCountCart();
-  }
-
-  showConfirm() {
-    var result = confirm('Sản phẩm đã hết hàng mời chọn sản phẩm khác');
   }
 
   constructor(
     private route: ActivatedRoute,
     private httpService: HttpService,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location,
+    private dialogService: DialogService,
+    private router : Router
   ) {
     this.myForm = this.formBuilder.group({
       name: ['', Validators.required],

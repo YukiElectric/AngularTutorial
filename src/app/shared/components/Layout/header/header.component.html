@@ -6,9 +6,9 @@
             	<h1><a routerLink=""><img class="img-fluid" src="assets/images/logo.png"></a></h1>
             </div>
             <div id="search" class="col-lg-6 col-md-6 col-sm-12">
-                <form class="form-inline">
+                <form class="form-inline" (submit)="onClickEvent()">
                     <input [(ngModel)]="keyword" [ngModelOptions]="{ standalone : true }" class="form-control mt-3" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                    <button (click)="onClickEvent()" class="btn btn-danger mt-3" type="submit">Tìm kiếm</button>
+                    <button class="btn btn-danger mt-3" type="submit">Tìm kiếm</button>
                 </form>
             </div>
             <div id="cart" class="col-lg-3 col-md-3 col-sm-12">
