@@ -13,8 +13,8 @@
             </div>
 
             <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
-                <input type="number" id="quantity" class="form-control form-blue quantity" [(ngModel)]="item.count"
-                    [ngModelOptions]="{ standalone : true }" min="1">
+                <input type="number" id="quantity" class="form-control form-blue quantity" (input)="updateCart($event, item)" [(ngModel)]="item.count"
+                    [ngModelOptions]="{ standalone : true }">
             </div>
             <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{{ item.price*item.count | transferCurrencyMoney
                     }}</b><a (click)="deleteCart(item)" routerLink="{{currentPath}}">Xóa</a></div>
@@ -22,11 +22,11 @@
 
         <div class="row">
             <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
-                <button (click)="updateCart()" id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập
-                    nhật giỏ hàng</button>
+                <!-- <button (click)="updateCart()" id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập
+                    nhật giỏ hàng</button> -->
             </div>
             <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
-            <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{{sumPrice | transferCurrencyMoney}}</b></div>
+            <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>{{caculateSumPrice() | transferCurrencyMoney}}</b></div>
         </div>
     </form>
 
@@ -46,12 +46,12 @@
                     formControlName="phone" name="phone" class="form-control" required>
             </div>
             <div id="customer-mail" class="col-lg-4 col-md-4 col-sm-12">
-                <input placeholder="Email (bắt buộc)" type="email" [(ngModel)]="customerInfor['mail']" (ngModelChange)="changeValueForm()"
+                <input placeholder="Email (bắt buộc)" type="email" [(ngModel)]="customerInfor['email']" (ngModelChange)="changeValueForm()"
                     formControlName="mail" name="mail" class="form-control" required>
             </div>
             <div id="customer-add" class="col-lg-12 col-md-12 col-sm-12">
                 <input placeholder="Địa chỉ nhà riêng hoặc cơ quan (bắt buộc)" type="text" (ngModelChange)="changeValueForm()"
-                    [(ngModel)]="customerInfor['add']" formControlName="add" name="add" class="form-control" required>
+                    [(ngModel)]="customerInfor['address']" formControlName="add" name="add" class="form-control" required>
             </div>
         </div>
     </form>

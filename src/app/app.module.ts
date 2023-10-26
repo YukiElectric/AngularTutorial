@@ -26,6 +26,7 @@ import { CustomAlertComponent } from './shared/components/custom-alert/custom-al
 import { SaleComponent } from './pages/sale/sale.component';
 import { InfomationComponent } from './pages/infomation/infomation.component';
 import { WarrantyComponent } from './pages/warranty/warranty.component';
+import { ConfirmAlertComponent } from './shared/components/confirm-alert/confirm-alert.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { WarrantyComponent } from './pages/warranty/warranty.component';
     CustomAlertComponent,
     SaleComponent,
     InfomationComponent,
-    WarrantyComponent
+    WarrantyComponent,
+    ConfirmAlertComponent
   ],
   imports: [
     BrowserModule,

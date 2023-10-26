@@ -53,6 +53,10 @@ export class HttpService {
     return this.Http.post(BASE_API + '/products/' + id + '/comments', data, { params: config ? this.converConfigToParams(config) : undefined });
   }
 
+  sendOrder(data : any, config: any): Observable<any> {
+    return this.Http.post(BASE_API+'/order', data, { params: config ? this.converConfigToParams(config) : undefined });
+  }
+
   updateCountCart() : void {
     const dataFromLocalStorage = localStorage.getItem('data');
     var tempCount = 0;
@@ -69,4 +73,5 @@ export class HttpService {
       this.page.next(params['page']); 
     })
   }
+
 }

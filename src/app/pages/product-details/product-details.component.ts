@@ -63,7 +63,6 @@ export class ProductDetailsComponent implements OnInit {
   submitComment(e: any) {
     e.preventDefault();
     this.isInvalid = this.myForm.get('name')?.invalid && this.myForm.get('name')?.dirty;
-    console.log(this.isInvalid);
 
     this.httpService.createCommentProduct(this.id, this.data, {}).subscribe(data => {
       if (data.status == 'success') {

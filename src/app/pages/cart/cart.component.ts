@@ -20,8 +20,8 @@ export class CartComponent implements OnInit {
   customerInfor: { [key: string]: string } = {
     name: '',
     phone: '',
-    mail: '',
-    add: '',
+    email: '',
+    address: '',
   }
 
   countCart: number = 0;
@@ -47,9 +47,20 @@ export class CartComponent implements OnInit {
   paymentProduct() {
     if (this.myForm.valid) {
       if (this.countCart != 0) {
-        localStorage.removeItem('data');
-        this.httpService.updateCountCart();
-        this.router.navigate(['/Success'], {});
+        var carts = this.data.map((item: { id: any; count: any; }) => ({
+          prd_id: item.id,
+          qty: item.count
+        }))
+        this.httpService.sendOrder({
+          items: carts,
+          ...this.customerInfor
+        }, {}).subscribe(data => {
+          if (data.status == "success") {
+            localStorage.removeItem('data');
+            this.httpService.updateCountCart();
+            this.router.navigate(['/Success'], {});
+          }
+        })
       } else this.dialogService.openConfirmDialog("noInfor");
     } else this.erorStatus = false;
   }
@@ -68,36 +79,52 @@ export class CartComponent implements OnInit {
   }
 
   deleteCart(item: any) {
-    var newData: {}[] = [];
-    for (let index of this.data) if (index.id !== item.id) newData.push(index);
-    localStorage.removeItem('data');
+    this.dialogService.openConfirmDeleteDialog();
+    this.dialogService.dialogStatus.subscribe(data => {
+      if (data) {
+        var newData: {}[] = [];
+        for (let index of this.data) if (index.id !== item.id) newData.push(index); 
+        localStorage.removeItem('data');
 
-    var jsonString = JSON.stringify(newData);
-    localStorage.setItem('data', jsonString);
-    this.httpService.updateCountCart();
-    this.ngOnInit();
+        var jsonString = JSON.stringify(newData);
+        localStorage.setItem('data', jsonString);
+        this.httpService.updateCountCart();
+        this.ngOnInit();
+        this.dialogService.setDialogStatus(false);
+      }
+    })
   }
 
-  updateCart() {
-    var jsonString = JSON.stringify(this.data);
-    localStorage.removeItem('data');
-    localStorage.setItem('data', jsonString);
-    this.httpService.updateCountCart();
-    this.ngOnInit();
+  updateCart(e: any, item: any) {
+    if (parseInt(e.target.value) <= 0) {
+      e.target.value = item.count = 1;
+      this.deleteCart(item);
+    } else {
+      var jsonString = JSON.stringify(this.data);
+      localStorage.removeItem('data');
+      localStorage.setItem('data', jsonString);
+      this.httpService.updateCountCart();
+      this.ngOnInit();
+    }
+
   }
 
   ngOnInit(): void {
     this.httpService.countCart.subscribe(data => {
       this.countCart = data;
     })
-    this.sumPrice = 0;
     this.getDataFormLocalStorage();
-    for (let item of this.data) this.sumPrice += item.count * item.price;
   }
 
   openConfirm(e: Event) {
     e.preventDefault();
     this.dialogService.openConfirmDialog("contact");
+  }
+
+  caculateSumPrice() {
+    this.sumPrice = 0;
+    for (let item of this.data) this.sumPrice += item.count * item.price;
+    return this.sumPrice;
   }
 
 }
