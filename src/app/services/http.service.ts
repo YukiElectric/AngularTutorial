@@ -25,36 +25,41 @@ export class HttpService {
     return queryParams;
   }
 
+  private configParams(config : any) {
+    let params = { params: config ? this.converConfigToParams(config) : undefined }
+    return params;
+  }
+
   getProducts(config: any): Observable<any> {
-    return this.Http.get(BASE_API+'/products', { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API+'/products', this.configParams(config));
   }
 
   getCategories(config: any): Observable<any> {
-    return this.Http.get(BASE_API + '/categories', { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API + '/categories', this.configParams(config));
   }
 
   getCategory(id: any, config: any): Observable<any> {
-    return this.Http.get(BASE_API + '/categories/' + id, { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API + '/categories/' + id, this.configParams(config));
   }
 
   getProductCategory(id: any, config: any): Observable<any> {
-    return this.Http.get(BASE_API + '/categories/' + id + '/products', { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API + '/categories/' + id + '/products', this.configParams(config));
   }
 
   getProduct(id: any, config: any): Observable<any> {
-    return this.Http.get(BASE_API + '/products/' + id, { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API + '/products/' + id, this.configParams(config));
   }
 
   getCommentProduct(id: any, config: any): Observable<any> {
-    return this.Http.get(BASE_API + '/products/' + id + '/comments', { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.get(BASE_API + '/products/' + id + '/comments', this.configParams(config));
   }
 
   createCommentProduct(id: any, data: any, config: any): Observable<any> {
-    return this.Http.post(BASE_API + '/products/' + id + '/comments', data, { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.post(BASE_API + '/products/' + id + '/comments', data, this.configParams(config));
   }
 
   sendOrder(data : any, config: any): Observable<any> {
-    return this.Http.post(BASE_API+'/order', data, { params: config ? this.converConfigToParams(config) : undefined });
+    return this.Http.post(BASE_API+'/order', data, this.configParams(config));
   }
 
   updateCountCart() : void {
