@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartComponent } from './pages/cart/cart.component';
@@ -27,6 +27,7 @@ import { SaleComponent } from './pages/sale/sale.component';
 import { InfomationComponent } from './pages/infomation/infomation.component';
 import { WarrantyComponent } from './pages/warranty/warranty.component';
 import { ConfirmAlertComponent } from './shared/components/confirm-alert/confirm-alert.component';
+import { SkeletonComponent } from './shared/components/skeleton/skeleton.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ConfirmAlertComponent } from './shared/components/confirm-alert/confirm
     SaleComponent,
     InfomationComponent,
     WarrantyComponent,
-    ConfirmAlertComponent
+    ConfirmAlertComponent,
+    SkeletonComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,8 @@ import { ConfirmAlertComponent } from './shared/components/confirm-alert/confirm
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

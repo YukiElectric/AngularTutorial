@@ -1,5 +1,6 @@
+<app-skeleton *ngIf="skeleton"></app-skeleton>
 <!--	List Product	-->
-<div class="products">
+<div *ngIf="!skeleton" class="products">
     <h3>{{product.name}} (hiện có {{countItem}} sản phẩm)</h3>
     <div class="product-list card-deck">
         <!-- HAVE API -->

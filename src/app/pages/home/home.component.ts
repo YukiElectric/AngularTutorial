@@ -10,24 +10,26 @@ export class HomeComponent implements OnInit {
 
   featuredData: any;
   latestData: any;
+  skeleton : boolean = true;
 
   constructor(private httpService: HttpService) { }
 
   ngOnInit(): void {
 
     this.httpService.getProducts({
-      limit: 6,
+      limit: 12,
+      page : 5,
       "filter[is_featured]": true,
     }).subscribe(data => {
       this.featuredData = data.data.docs;
+      this.httpService.getProducts({
+        limit: 12,
+        page : 5
+      }).subscribe(data => {
+        this.latestData = data.data.docs;
+        this.skeleton = false;
+      });
     });
-
-    this.httpService.getProducts({
-      limit: 6,
-    }).subscribe(data => {
-      this.latestData = data.data.docs;
-    });
-
   }
 
 }

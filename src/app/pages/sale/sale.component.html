@@ -1,4 +1,5 @@
-<div class="products">
+<app-skeleton *ngIf="skeleton"></app-skeleton>
+<div *ngIf="!skeleton" class="products">
     <h3>Hot sale</h3>
     <div class="product-list card-deck">
 
@@ -16,7 +17,7 @@
     </div>
 </div>
 
-<div class="products">
+<div *ngIf="!skeleton" class="products">
     <h3>Mua combo phụ kiện giảm giá</h3>
     <div class="product-list card-deck">
 

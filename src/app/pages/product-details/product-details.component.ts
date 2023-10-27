@@ -25,6 +25,8 @@ export class ProductDetailsComponent implements OnInit {
     content: '',
   }
 
+  skeleton : boolean = true;
+
   currentPath = this.location.path();
 
   myForm: FormGroup;
@@ -130,6 +132,7 @@ export class ProductDetailsComponent implements OnInit {
     this.httpService.getProduct(this.id, {}).subscribe(data => {
       this.product = data.data;
       this.imgUrl = getImageProduct(this.product.image);
+      this.skeleton = false;
     });
 
     this.getComment();

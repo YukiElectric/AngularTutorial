@@ -1,5 +1,6 @@
+<app-skeleton *ngIf="skeleton"></app-skeleton>
 <!--	List Product	-->
-<div class="products">
+<div *ngIf="!skeleton" class="products">
     <div id="search-result">Kết quả tìm kiếm với sản phẩm <span>{{keyword}}</span></div>
     <div class="product-list card-deck">
         <!-- HAVE API -->

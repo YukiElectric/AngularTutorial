@@ -8,11 +8,12 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class SearchComponent implements OnInit {
   keyword : string = '';
-  page : number = 0;
+  page : number = 1;
   products : any;
   pages = {
     limit : 12,
   }
+  skeleton : boolean = true;
 
   constructor(
       private httpService : HttpService
@@ -26,7 +27,7 @@ export class SearchComponent implements OnInit {
     })
 
     this.httpService.page.subscribe(data => {
-      data!=undefined ? this.page = data : this.page = 0;
+      data!=undefined ? this.page = data : this.page;
       this.httpService.getProducts({
         name : this.keyword,
         limit : 12,
@@ -34,6 +35,7 @@ export class SearchComponent implements OnInit {
       }).subscribe(data => {
         this.products = data.data.docs;
         this.pages = {...this.pages, ...data.data.pages};
+        this.skeleton = false;
       })
     })
   }

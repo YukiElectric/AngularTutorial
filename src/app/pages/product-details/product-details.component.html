@@ -1,5 +1,6 @@
+<app-skeleton *ngIf="skeleton"></app-skeleton>
 <!--	List Product	-->
-<div id="product">
+<div *ngIf="!skeleton" id="product">
     <div id="product-head" class="row">
         <div id="product-img" class="col-lg-6 col-md-6 col-sm-12">
             <img src="{{imgUrl}}">
@@ -41,7 +42,7 @@
     </div>
     
     <!--	Comment	-->
-    <div id="comment" class="row">
+    <div *ngIf="!skeleton" id="comment" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h3>Bình luận sản phẩm</h3>
             <form method="post" [formGroup]="myForm" (submit)="submitComment($event)">
@@ -64,7 +65,7 @@
     <!--	End Comment	-->  
     
     <!--	Comments List	-->
-    <div id="comments-list" class="row">
+    <div *ngIf="!skeleton" id="comments-list" class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="comment-item" *ngFor="let item of comment">
                 <div>

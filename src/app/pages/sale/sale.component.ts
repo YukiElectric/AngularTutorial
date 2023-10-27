@@ -10,6 +10,7 @@ import { getImageProduct } from 'src/app/shared/ultils';
 export class SaleComponent implements OnInit{
   saleProducts : any;
   comboSaleProducts : any;
+  skeleton : boolean = true;
 
   constructor (private httpService : HttpService) {}
 
@@ -19,21 +20,21 @@ export class SaleComponent implements OnInit{
 
   ngOnInit(): void {
     this.httpService.getProducts({
-      limit : 6,
+      limit : 12,
       name : 'iphone',
       "filter[is_featured]" : true,
       "filter[is_stock]" : true
     }).subscribe(data => {
       this.saleProducts = data.data.docs;
-    })
-
-    this.httpService.getProducts({
-      limit : 6,
-      "filter[is_featured]" : true,
-      "filter[is_stock]" : true,
-      page: 168
-    }).subscribe(data => {
-      this.comboSaleProducts = data.data.docs;
+      this.httpService.getProducts({
+        limit : 12,
+        "filter[is_featured]" : true,
+        "filter[is_stock]" : true,
+        page: 165
+      }).subscribe(data => {
+        this.comboSaleProducts = data.data.docs;
+      })
+      this.skeleton = false;
     })
   }
 }

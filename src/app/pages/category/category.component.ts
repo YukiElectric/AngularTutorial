@@ -21,6 +21,8 @@ export class CategoryComponent implements OnInit {
     limit : 12,
   }
 
+  skeleton : boolean = true;
+
   constructor(
     private route : ActivatedRoute,
     private httpService : HttpService
@@ -39,8 +41,9 @@ export class CategoryComponent implements OnInit {
         this.pages = {...this.pages, ...data.data.pages}
         this.countItem = 0;
         for (let i of this.productItem) if(i!=undefined) this.countItem++;
+        this.skeleton = false;
       });
-    })
+    },)
 
     this.httpService.getCategory(this.id, {}).subscribe(data => {
       this.product = data.data;
